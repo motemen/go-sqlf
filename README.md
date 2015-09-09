@@ -14,7 +14,7 @@ For example, see the example for Printf.
 ### Printf
 
 ```go
-query, args := Printf(
+query, args := sqlf.Printf(
 	"SELECT %s FROM %s WHERE col1 = %_ AND col2 IN (%_)",
 	"id",
 	"table",

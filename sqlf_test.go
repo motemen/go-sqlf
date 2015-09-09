@@ -1,16 +1,17 @@
-package sqlf
+package sqlf_test
 
 import (
 	"fmt"
 	"testing"
 
+	"github.com/motemen/go-sqlf"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestPrintf(t *testing.T) {
 	assert := assert.New(t)
 
-	query, args := Printf(
+	query, args := sqlf.Printf(
 		"SELECT %s FROM %s WHERE col1 = %_ AND col2 IN (%_)",
 		"id",
 		"table",
@@ -35,9 +36,9 @@ func TestPrintf(t *testing.T) {
 func TestPrintf_Builder(t *testing.T) {
 	assert := assert.New(t)
 
-	wherePart := Printf("col1 IN (%_)", []interface{}{"x", "y"})
+	wherePart := sqlf.Printf("col1 IN (%_)", []interface{}{"x", "y"})
 
-	query, args := Printf(
+	query, args := sqlf.Printf(
 		"SELECT id FROM table WHERE %_ AND col2 = %_",
 		wherePart,
 		"z",
@@ -58,7 +59,7 @@ func TestPrintf_Builder(t *testing.T) {
 }
 
 func ExamplePrintf() {
-	query, args := Printf(
+	query, args := sqlf.Printf(
 		"SELECT %s FROM %s WHERE col1 = %_ AND col2 IN (%_)",
 		"id",    // SELECT %s
 		"table", // FROM %s
