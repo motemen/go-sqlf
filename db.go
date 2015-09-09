@@ -1,3 +1,5 @@
+// Convenient shortcut methods in combination with database/sql.
+
 package sqlf
 
 import (

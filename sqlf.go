@@ -1,3 +1,9 @@
+// Package sqlf provides Printf-like methods to generate SQL queries with placeholders.
+// It produces query and args which can be passed to database/sql APIs.
+// It assumes a special format verb "%_" in addition to those of package fmt,
+// which expands to SQL placeholders.
+//
+// For example, see the example for Printf.
 package sqlf
 
 import (
