@@ -27,10 +27,10 @@ fmt.Println(args)
 ```
 
 Output:
+
 ```
 SELECT id FROM table WHERE col1 = ? AND col2 IN (?,?,?)
 [x 1 2 3]
-
 ```
 
 ## Author
