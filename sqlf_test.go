@@ -1,6 +1,7 @@
 package sqlf
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -15,7 +16,7 @@ func TestPrintf(t *testing.T) {
 		"table",
 		"value",
 		[]interface{}{1, 2, 3},
-	).Build()
+	).BuildSQL()
 
 	assert.Equal(
 		"SELECT id FROM table WHERE col1 = ? AND col2 IN (?,?,?)",
@@ -40,7 +41,7 @@ func TestPrintf_Builder(t *testing.T) {
 		"SELECT id FROM table WHERE %_ AND col2 = %_",
 		wherePart,
 		"z",
-	).Build()
+	).BuildSQL()
 
 	assert.Equal(
 		"SELECT id FROM table WHERE col1 IN (?,?) AND col2 = ?",
@@ -54,4 +55,20 @@ func TestPrintf_Builder(t *testing.T) {
 			"z",
 		},
 	)
+}
+
+func ExamplePrintf() {
+	query, args := Printf(
+		"SELECT %s FROM %s WHERE col1 = %_ AND col2 IN (%_)",
+		"id",    // SELECT %s
+		"table", // FROM %s
+		"x",     // col1 = %_
+		[]interface{}{1, 2, 3}, // col2 IN (%_)
+	).BuildSQL()
+
+	fmt.Println(query)
+	fmt.Println(args)
+	// Output:
+	// SELECT id FROM table WHERE col1 = ? AND col2 IN (?,?,?)
+	// [x 1 2 3]
 }
