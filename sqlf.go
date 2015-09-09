@@ -5,17 +5,24 @@ import (
 	"fmt"
 )
 
+// Builder builds query and args useable for database/sql's API.
 type Builder interface {
 	Build() (query string, args []interface{})
 }
 
+// Printf is the main API; It simply creates SQL.
+// The first argument format is that of fmt.Printf,
+// with one special verb "%_", which tries to expand args
+// to an SQL placeholder and args.
 func Printf(format string, args ...interface{}) SQL {
 	return SQL{
 		Format: format,
-		Args:   args,
+		Args:   args, // TODO renaming to values?
 	}
 }
 
+// SQL is a buildable query object; Call its Build() method
+// to obtain query and args.
 type SQL struct {
 	Format string
 	Args   []interface{}
