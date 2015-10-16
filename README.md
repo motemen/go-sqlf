@@ -4,7 +4,7 @@
 
 Package sqlf provides Printf-like methods to generate SQL queries with placeholders.
 It produces query and args which can be passed to database/sql APIs.
-It assumes a special format verb "%_" in addition to those of package fmt,
+It assumes a special format verb "%\_" in addition to those of package fmt,
 which expands to SQL placeholders.
 
 For example, see the example for Printf.
@@ -15,11 +15,11 @@ For example, see the example for Printf.
 
 ```go
 query, args := sqlf.Printf(
-	"SELECT %s FROM %s WHERE col1 = %_ AND col2 IN (%_)",
-	"id",
-	"table",
-	"x",
-	[]interface{}{1, 2, 3},
+    "SELECT %s FROM %s WHERE col1 = %_ AND col2 IN (%_)",
+    "id",    // SELECT %s
+    "table", // FROM %s
+    "x",     // col1 = %_
+    []interface{}{1, 2, 3}, // col2 IN (%_)
 ).BuildSQL()
 
 fmt.Println(query)
