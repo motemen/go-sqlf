@@ -81,6 +81,9 @@ func (f formatter) Format(s fmt.State, c rune) {
 			// e.g. "IN (%_)", []{1,2,3} -> "IN (?,?,?)", 1, 2, 3
 			s.Write(bytes.Repeat([]byte(",?"), len(vv))[1:])
 			f.addArgs(vv...)
+		} else if b, ok := f.value.([]byte); ok {
+			s.Write([]byte{'?'})
+			f.addArgs(b)
 		} else if rv := reflect.ValueOf(f.value); rv.Type().Kind() == reflect.Slice {
 			// Any slices
 			l := rv.Len()

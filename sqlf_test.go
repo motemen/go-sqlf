@@ -12,15 +12,16 @@ func TestPrintf(t *testing.T) {
 	assert := assert.New(t)
 
 	query, args := sqlf.Printf(
-		"SELECT %s FROM %s WHERE col1 = %_ AND col2 IN (%_)",
+		"SELECT %s FROM %s WHERE col1 = %_ AND col2 IN (%_) AND col3 = %_",
 		"id",
 		"table",
 		"value",
 		[]interface{}{1, 2, 3},
+		[]byte("hello"),
 	).BuildSQL()
 
 	assert.Equal(
-		"SELECT id FROM table WHERE col1 = ? AND col2 IN (?,?,?)",
+		"SELECT id FROM table WHERE col1 = ? AND col2 IN (?,?,?) AND col3 = ?",
 		query,
 	)
 
@@ -29,6 +30,7 @@ func TestPrintf(t *testing.T) {
 		[]interface{}{
 			"value",
 			1, 2, 3,
+			[]byte("hello"),
 		},
 	)
 }
