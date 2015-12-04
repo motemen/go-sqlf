@@ -36,4 +36,4 @@ SELECT id FROM table WHERE col1 = ? AND col2 IN (?,?,?)
 
 ## Author
 
-motemen <https://github.com/motemen>
+motemen <https://motemen.github.io/>
